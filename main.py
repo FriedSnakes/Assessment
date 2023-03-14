@@ -61,8 +61,17 @@ def main():
       print("Cost per serving: $", format(cost_per_serving, ".2f"))
       break
 
-  
-main()
-
-input
-
+while True:
+    print("Type 1 to calculate the cost of total ingredients, 2 to calculate the cost per serving of a meal, or 3 to quit the program")
+    user_action = input("What would you like to do?")
+    if user_action == '1':
+      print("dog")
+    elif user_action == '2':
+      print("cat")
+    elif user_action == '3':
+      break
+    else:
+      print("Invalid option")
+      continue
+   
+       
