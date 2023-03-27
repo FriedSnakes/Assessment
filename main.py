@@ -32,11 +32,13 @@ def ingredient_cost_calculator():
         total_cost = sum([ingredient[1] * ingredient[2] for ingredient in ingredient_costs])
         print("The total cost of ingredients is: $" + str(total_cost))
 
-        retry = input("Do you want to retry? (Y/N) ")
+        retry = input("Do you want to retry? (Y to retry, any other button to not) ")
         if retry.lower() == "y":
             continue
         else:
             return total_cost
+
+
 
 def cost_per_serving_calculator():
     while True:
@@ -68,14 +70,33 @@ def save_to_history(entry):
         f.write(entry + '\n')
 
 
+def delete_file(file_path):
+    try:
+        os.remove(file_path)
+        print(f"{file_path} has been deleted.")
+    except OSError as e:
+        print(f"Error deleting {file_path}: {e}")
+
+def clear_history():
+    try:
+        delete_file("history.txt")
+    except Exception as e:
+        print("An error occurred while clearing the history:", e)
+    else:
+        print("History cleared successfully!")
+
+
+
+print("Welcome to the meal cost calculator. ")
 
 while True:
-    print("Welcome to the meal cost calculator. You have 4 options before you")
+    print("\nYou have 6 options before you")
     print("Option 1: Calculate the total cost of ingredients")
     print("Option 2: Calculate the average cost per serving of a meal")
-    print("Option 3: Quit the program")
+    print("Option 3: View your history")
     print("Option 4: Clear your console")
-    print("Option 5: Quit program")
+    print("Option 5: Clear history")
+    print("Option 6: Quit program")
     user_action = input("\nWhat would you like to do? ")
 
     if user_action == '1':
@@ -96,12 +117,25 @@ while True:
         view_history()
         continue
 
+  
     elif user_action == '4':
+        print("Clearing Console!")
         cls()
         continue
-
+      
     elif user_action == '5':
-        print("\nQuitting program!")
+          print("Clearing History")
+          clear_history()
+          continue
+  
+    elif user_action == '6':
+        print("\nQuitting program!")    
+        break
+    
     else:
       print("Invalid option\n")
       continue
+
+
+
+    
