@@ -18,15 +18,16 @@ def file(ingredient_name, ingredient_cost):
     except Exception as e:
         print("An error occurred while writing to the file:", e)
 
+
 def ingredient_cost_calculator():
     while True:
         ingredient_costs = []
-        num_ingredients = int(input("\nHow many ingredients are in the recipe? "))
+        num_ingredients = get_number_input("\nHow many ingredients are in the recipe? ")
         
         for i in range(num_ingredients):
             ingredient_name = input("Enter the name of ingredient #" + str(i+1) + ": ")
-            ingredient_cost = float(input("Enter the cost of " + ingredient_name + ": $"))
-            ingredient_quantity = float(input("Enter the quantity of " + ingredient_name + ": "))
+            ingredient_cost = get_valid_number_decimal("Enter the cost of " + ingredient_name + ": $")
+            ingredient_quantity = get_number_input("Enter the quantity of " + ingredient_name + ": ")
             ingredient_costs.append((ingredient_name, ingredient_cost, ingredient_quantity))
         
         total_cost = sum([ingredient[1] * ingredient[2] for ingredient in ingredient_costs])
@@ -38,12 +39,31 @@ def ingredient_cost_calculator():
         else:
             return total_cost
 
+def is_valid_number(input_str):
+  return input_str.isdigit()
 
+
+def get_number_input(prompt):
+    while True:
+        user_input = input(prompt)
+        if is_valid_number(user_input):
+          return int(user_input)
+        else:
+          print("Please enter a valid number.")
+
+def get_valid_number_decimal(prompt):
+    while True:
+        num = input(prompt)
+        try:
+            val = float(num)
+            return val
+        except ValueError:
+            print("This is not a number. Please enter a valid number.")
 
 def cost_per_serving_calculator():
     while True:
-        total_cost = float(input("Enter the total cost of the meal: "))
-        num_servings = int(input("Enter the number of servings the meal can make: "))
+        total_cost = get_valid_number_decimal("Enter the total cost of the meal: ")
+        num_servings = get_valid_number_decimal("Enter the number of servings the meal can make: ")
         cost_per_serving = total_cost / num_servings
 
         print("The cost per serving of the meal is: $", format(cost_per_serving, '.2f'))
@@ -84,7 +104,6 @@ def clear_history():
         print("An error occurred while clearing the history:", e)
     else:
         print("History cleared successfully!")
-
 
 
 print("Welcome to the meal cost calculator. ")
