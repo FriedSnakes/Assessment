@@ -1,3 +1,1 @@
-Total ingredient cost: $48.0
-Total ingredient cost: $4.0
-Total ingredient cost: $4
+Total ingredient cost of dog: $1.0

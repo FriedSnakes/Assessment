@@ -7,22 +7,11 @@
   TIP: Use assessment guide to help guide you through this Internal
 '''
 # Importing necessary modules
-import json
 import os
+from termcolor import colored
 
-# Function to write to a file with given ingredient name and cost
-def file(ingredient_name, ingredient_cost):
-    # Creating a dictionary with the ingredient name and cost
-    ingredient_list = {ingredient_name: ingredient_cost}
-    # Prompting the user to enter a file name for the file to be written to
-    file_name = input("What do you want the file name to be? ")
-    try:
-        # Opening the file in write mode
-        with open(file_name, "w") as f:
-            # Writing the dictionary as a JSON string to the file
-            f.write(json.dumps(ingredient_list))
-    except Exception as e:
-        print("An error occurred while writing to the file:", e)
+
+
 
 # Function to calculate the total cost of ingredients
 def ingredient_cost_calculator():
@@ -33,9 +22,9 @@ def ingredient_cost_calculator():
         
         # Looping through each ingredient and prompting the user for the name, cost, and quantity
         for i in range(num_ingredients):
-            ingredient_name = input("Enter the name of ingredient #" + str(i+1) + ": ")
-            ingredient_cost = get_valid_number_decimal("Enter the cost of " + ingredient_name + ": $")
-            ingredient_quantity = get_valid_number_decimal("Enter the quantity of " + ingredient_name + ": ")
+            ingredient_name = input(colored("Enter the name of ingredient #" + str(i+1) + ": ", "magenta"))
+            ingredient_cost = get_valid_number_decimal(colored("Enter the cost of " + colored(ingredient_name + ": $", "cyan") , "magenta"))
+            ingredient_quantity = get_valid_number_decimal(colored("How many serving sizes of " + colored(ingredient_name + " is required: ", "cyan")  , "magenta"))
             # Adding the ingredient to a list as a tuple of name, cost, and quantity
             ingredient_costs.append((ingredient_name, ingredient_cost, ingredient_quantity))
         
@@ -61,7 +50,7 @@ def get_number_input(prompt):
         if is_valid_number(user_input):
           return int(user_input)
         else:
-          print("Please enter a valid number.")
+          print(colored("Invalid option, numerals only\n","red"))
 
 #function to check user input is an integer, and allows inputs to be decimals
 
@@ -70,9 +59,12 @@ def get_valid_number_decimal(prompt):
         num = input(prompt)
         try:
             val = float(num)
-            return val
+            if val <= 0:
+                print(colored("Number must be greater than zero\n", "red"))
+            else:
+                return val
         except ValueError:
-            print("This is not a number. Please enter a valid number.")
+            print(colored("Invalid option, numerals only\n", "red"))
 
 
 
@@ -81,8 +73,8 @@ def get_valid_number_decimal(prompt):
 def cost_per_serving_calculator():
     while True:
         # Prompting the user to enter the total cost of the meal and the number of servings it can make
-        total_cost = get_valid_number_decimal("Enter the total cost of the meal: ")
-        num_servings = get_valid_number_decimal("Enter the number of servings the meal can make: ")
+        total_cost = get_valid_number_decimal(colored("Enter the total cost of the meal: $ ", "magenta"))
+        num_servings = get_valid_number_decimal(colored("Enter the number of servings the meal can make: ", "magenta"))
         # Calculating the cost per serving by dividing total cost by number of servings
         cost_per_serving = total_cost / num_servings
 
@@ -120,22 +112,25 @@ def delete_file(file_path):
         os.remove(file_path)
         print(f"{file_path} has been deleted.")
     except OSError as e:
-        print(f"Error deleting {file_path}: {e}")
+        print(colored(f"Error deleting {file_path}: {e}","red"))
 
 # function to clear the history.txt file
 def clear_history():
     try:
         delete_file("history.txt")
     except Exception as e:
-        print("An error occurred while clearing the history:", e)
+        print(colored("An error occurred while clearing the history:", e, ("red")))
     else:
         print("History cleared successfully!")
 
 # main program starts here
 print("Welcome to the meal cost calculator. ")
+#Informing user of colour code
+print(colored("Magenta means user input is expected", "magenta"))
+print(colored("Red means error has been encountered", "red"))
 while True:
     # printing available options to the user
-    print("\nYou have 6 options before you")
+    print(colored("\nYou have 6 options before you", "magenta"))
     print("Option 1: Calculate the total cost of ingredients")
     print("Option 2: Calculate the average cost per serving of a meal")
     print("Option 3: View your history")
@@ -151,7 +146,8 @@ while True:
         # calling a function to calculate the total ingredient cost
         total_cost = ingredient_cost_calculator()
         # formatting the calculated value as a string and adding it to the history.txt file
-        entry = f"Total ingredient cost: ${total_cost}"
+        RecipeName = input("What would you like to name this recipe?")
+        entry = f"Total ingredient cost of {RecipeName}: ${total_cost}"
         save_to_history(entry)
         # continuing the loop to prompt for more user actions
         continue
@@ -161,7 +157,8 @@ while True:
         # calling a function to calculate the cost per serving
         cost_per_serving = cost_per_serving_calculator()
         # formatting the calculated value as a string and adding it to the history.txt file
-        entry = f"Cost per serving: ${cost_per_serving:.2f}"
+        File_Name = input("What would you like to name this recipe?")
+        entry = f"Cost per serving of {File_Name}: ${cost_per_serving:.2f}"
         save_to_history(entry)
         # continuing the loop to prompt for more user actions
         continue
@@ -192,7 +189,7 @@ while True:
         break
 
     else:
-        print("Invalid option\n")
+        print(colored("Invalid option, numerals only\n","red"))
 
 
     
