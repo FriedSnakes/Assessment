@@ -27,7 +27,7 @@ def ingredient_cost_calculator():
         
         # Calculating the total cost of all ingredients by multiplying cost and quantity and summing
         total_cost = sum([ingredient[1] * ingredient[2] for ingredient in ingredient_costs])
-        print("The total cost of ingredients is: $" + str(total_cost))
+        print("The total cost of ingredients is: $" + format(total_cost, '.2f'))
 
         # Prompting the user if they want to retry
         retry = input("Do you want to retry? (Y to retry, any other button to not) ")
