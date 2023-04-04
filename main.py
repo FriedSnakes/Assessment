@@ -10,15 +10,12 @@
 import os
 from termcolor import colored
 
-
-
-
 # Function to calculate the total cost of ingredients
 def ingredient_cost_calculator():
     while True:
         ingredient_costs = []
         # Prompting the user to enter the number of ingredients in the recipe
-        num_ingredients = get_number_input("\nHow many ingredients are in the recipe? ")
+        num_ingredients = get_number_input(colored("\nHow many ingredients are in the recipe? ", "magenta"))
         
         # Looping through each ingredient and prompting the user for the name, cost, and quantity
         for i in range(num_ingredients):
@@ -124,10 +121,13 @@ def clear_history():
         print("History cleared successfully!")
 
 # main program starts here
+print("_"*50)
 print("Welcome to the meal cost calculator. ")
+print("_"*50)
 #Informing user of colour code
 print(colored("Magenta means user input is expected", "magenta"))
 print(colored("Red means error has been encountered", "red"))
+print(colored("Cyan means it is a user input", "cyan"))
 while True:
     # printing available options to the user
     print(colored("\nYou have 6 options before you", "magenta"))
@@ -138,7 +138,7 @@ while True:
     print("Option 5: Clear history")
     print("Option 6: Quit program")
     # getting user input for the action to be taken
-    user_action = input("\nWhat would you like to do? ")
+    user_action = input("\nWhat would you like to do? Enter option number, then press enter ")
 
     # conditional statements for each of the user actions
     if user_action == '1':
